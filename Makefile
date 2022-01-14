@@ -17,3 +17,7 @@ build: objects $(OBJ)
 	ld -o $(NAME) $(OBJ)
 	rm $(OBJ)
 
+clean:
+	rm -f lab2 lib.o dict.o main.o
+
+.PHONY: clean

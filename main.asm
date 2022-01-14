@@ -1,4 +1,4 @@
-%define buf_size 255
+%define buf_size 256
 
 global _start
 extern find_word
@@ -25,14 +25,13 @@ _start:
 	call read_word
 
 	mov rdi, word_buf
-	mov rsi,pupa
+	mov rsi,last
 	call find_word
 	test rdi,rdi
 	jnz .ok
 
 	mov rdi, fail
 	call print_string
-	mov rax, 1
 	call exit
 
 	.ok:

@@ -1,3 +1,5 @@
+%DEFINE stdout 1
+%DEFINE stdin 0
 section .text
 
 GLOBAL exit
@@ -18,7 +20,6 @@ GLOBAL string_copy
 exit:
 	xor rax,rax ; обнуляем аккумулятор
 	mov rax,60 ; кладм код выхода
-	xor rdi,rdi ; обнуляем дата регистр
 	syscall ; уходим
 
 string_length:
@@ -36,7 +37,7 @@ print_string:
 	mov rsi,rdi ; кладём количество выводимых символов
 	mov rdx,rax ; кладём ссылку откуда выводить
 	mov rax,1 ; sys_write
-	mov rdi,1 ; stdout
+	mov rdi, stdout ; stdout
 	syscall
 	xor rax,rax ; убираем за собой
 	ret
@@ -44,7 +45,7 @@ print_string:
 print_char:
 	push rdi ; пихаем символ на стек
 	mov rsi,rsp ; адрес вершины стека
-	mov rdi,1 ; stdout
+	mov rdi,stdout ; stdout
 	mov rdx,1 ; сколько выводить 
 	mov rax,1 ; sys_write
 	syscall
@@ -113,7 +114,7 @@ string_equals:
 read_char:
 	dec rsp ; место для записи символа
 	mov rax,0 ; код sys_read
-	mov rdi,0 ; откуда читаем
+	mov rdi,stdin ; откуда читаем
 	mov rsi,rsp ; куда кладём
 	mov rdx,1 ; сколько читаем
 	syscall 
